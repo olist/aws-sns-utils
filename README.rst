@@ -5,7 +5,7 @@ aws-sns-utils
 .. |python-versions| image:: https://img.shields.io/badge/python-3.7-blue.svg
     :target: https://github.com/olist/aws-sns-utils
 
-.. |circleci| image:: https://circleci.com/gh/olist/easy-choices.svg?style=shield
+.. |circleci| image:: https://circleci.com/gh/olist/aws-sns-utils.svg?style=shield
     :target: https://circleci.com/gh/olist/aws-sns-utils
 
 
