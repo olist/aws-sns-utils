@@ -1,0 +1,52 @@
+[build-system]
+requires = ["poetry>=0.12"]
+build-backend = "poetry.masonry.api"
+
+[tool.black]
+line-length = 110
+target-version = ["py37"]
+
+[tool.isort]
+line_length = 110
+multi_line_output = 3
+include_trailing_comma = true
+force_grid_wrap = 0
+use_parentheses = true
+known_first_party = "olist_aws,olist_clients,olist_commons"
+known_localfolder = "tests,aws_sns_utils"
+sections = "FUTURE,STDLIB,THIRDPARTY,FIRSTPARTY,LOCALFOLDER"
+default_section = "THIRDPARTY"
+
+[tool.poetry]
+name = "aws_sns_utils"
+version = "0.1.0"
+description = "A library that will help you to handle operations in AWS sns with a friendly API."
+authors = ["Olist Developers <developers@olist.com>"]
+url = "aws-sns-utils"
+keywords = [ "olist", "clients" ]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3.6",
+    "Topic :: Software Development :: Libraries",
+]
+exclude = [ "docs", "tests*"]
+include = ["*.rst", "*.txt", "*.py", "*.png", "*.dot", "Makefile"]
+
+[[tool.poetry.source]]
+name = "olist"
+url = ""
+
+[tool.poetry.dependencies]
+python = "^3.7"
+
+[tool.poetry.dev-dependencies]
+coverage = "^4.5"
+pre-commit = "^1.16"
+pytest = "^4.5"
+pytest-cov = "^2.7"
+pytest-randomly = "^3.0"
+pytest-deadfixtures = "^2.1"
+ipython = "^7.5"

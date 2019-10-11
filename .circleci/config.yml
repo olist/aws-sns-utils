@@ -1,0 +1,58 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: circleci/python:3.7.4-stretch
+
+    working_directory: ~/repo
+
+    steps:
+      - checkout
+
+      # Download and cache dependencies
+      - restore_cache:
+          name: "Restoring dependencies cache"
+          keys:
+          - v1-dependencies-{{ checksum "pyproject.toml" }}
+
+      - run:
+          name: install dependencies
+          command: |
+            curl -sSL https://raw.githubusercontent.com/sdispater/poetry/master/get-poetry.py | python3
+            poetry install
+
+      - save_cache:
+          name: "Saving dependencies cache"
+          paths:
+            - ~/.cache/pypoetry/virtualenvs
+          key: v1-dependencies-{{ checksum "pyproject.toml" }}
+
+      - restore_cache:
+          name: "Restoring hooks cache"
+          key: v1-hooks-{{ checksum ".pre-commit-config.yaml" }}
+
+      - run:
+          name: linters
+          command: SKIP=no-commit-to-branch poetry run pre-commit run -a -v
+
+      - save_cache:
+          name: "Saving hooks cache"
+          paths:
+            - "~/.cache/pre-commit/"
+          key: v1-hooks-{{ checksum ".pre-commit-config.yaml" }}
+
+      - run:
+          name: run tests
+          command: poetry run pytest -vv -s --cov test-django-project --cov-report=term-missing --cov-report=html
+
+      - run:
+          name: dead-fixtures-check
+          command: poetry run pytest --dead-fixtures
+
+      - store_artifacts:
+          path: htmlcov
+          destination: test-reports
+
+branches:
+  only:
+    - master
