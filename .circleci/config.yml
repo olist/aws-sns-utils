@@ -43,7 +43,7 @@ jobs:
 
       - run:
           name: run tests
-          command: poetry run pytest -vv -s --cov test-django-project --cov-report=term-missing --cov-report=html
+          command: poetry run pytest -vv -s --cov=aws_sns_utils --cov-report=term-missing --cov-report=html
 
       - run:
           name: dead-fixtures-check
